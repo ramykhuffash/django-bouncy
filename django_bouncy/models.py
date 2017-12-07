@@ -1,5 +1,6 @@
 """Models for the django_bouncy app"""
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 
 class Feedback(models.Model):
