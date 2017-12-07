@@ -174,7 +174,8 @@ def process_bounce(message, notification):
             reporting_mta=bounce.get('reportingMTA'),
             action=recipient.get('action'),
             status=recipient.get('status'),
-            diagnostic_code=recipient.get('diagnosticCode')
+            diagnostic_code=recipient.get('diagnosticCode'),
+            headers=message.get('headers'),
         )]
 
     # Send signals for each bounce.
@@ -215,7 +216,8 @@ def process_complaint(message, notification):
             feedback_timestamp=clean_time(complaint['timestamp']),
             useragent=complaint.get('userAgent'),
             feedback_type=complaint.get('complaintFeedbackType'),
-            arrival_date=arrival_date
+            arrival_date=arrival_date,
+            headers=message.get('headers'),
         )]
 
     # Send signals for each complaint.
@@ -244,7 +246,7 @@ def process_delivery(message, notification):
 
     deliveries = []
     for eachrecipient in delivery['recipients']:
-        # Create each delivery 
+        # Create each delivery
         deliveries += [Delivery.objects.create(
             sns_topic=notification['TopicArn'],
             sns_messageid=notification['MessageId'],
@@ -255,7 +257,8 @@ def process_delivery(message, notification):
             # delivery
             delivered_time=delivered_datetime,
             processing_time=int(delivery['processingTimeMillis']),
-            smtp_response=delivery['smtpResponse']
+            smtp_response=delivery['smtpResponse'],
+            headers=message.get('headers'),
         )]
 
     # Send signals for each delivery.
