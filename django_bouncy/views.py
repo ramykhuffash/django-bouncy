@@ -175,7 +175,7 @@ def process_bounce(message, notification):
             action=recipient.get('action'),
             status=recipient.get('status'),
             diagnostic_code=recipient.get('diagnosticCode'),
-            headers=message.get('headers'),
+            dump=message,
         )]
 
     # Send signals for each bounce.
@@ -217,7 +217,7 @@ def process_complaint(message, notification):
             useragent=complaint.get('userAgent'),
             feedback_type=complaint.get('complaintFeedbackType'),
             arrival_date=arrival_date,
-            headers=message.get('headers'),
+            dump=message,
         )]
 
     # Send signals for each complaint.
@@ -258,7 +258,7 @@ def process_delivery(message, notification):
             delivered_time=delivered_datetime,
             processing_time=int(delivery['processingTimeMillis']),
             smtp_response=delivery['smtpResponse'],
-            headers=message.get('headers'),
+            dump=message,
         )]
 
     # Send signals for each delivery.

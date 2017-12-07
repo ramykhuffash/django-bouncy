@@ -1,6 +1,5 @@
 """Models for the django_bouncy app"""
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 
 class Feedback(models.Model):
@@ -13,7 +12,7 @@ class Feedback(models.Model):
     mail_id = models.CharField(max_length=100)
     mail_from = models.EmailField()
     address = models.EmailField()
-    headers = JSONField(null=True, blank=True)
+    dump = models.TextField(null=True, blank=True)
     # no feedback for delivery messages
     feedback_id = models.CharField(max_length=100, null=True, blank=True)
     feedback_timestamp = models.DateTimeField(
